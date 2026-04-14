@@ -39,6 +39,10 @@ Interactive course artifact for the AI Frontier Exploration assignment:
   - Compare.
 - Replaced the default README with project-specific instructions.
 - Added an automated screenshot script at `scripts/capture-screenshots.mjs`.
+- Created and pushed the public GitHub repository:
+  - `https://github.com/matheusmaldaner/vit-mvit-memvit-explorer`
+- Deployed the artifact to GitHub Pages:
+  - `http://matheus.wiki/vit-mvit-memvit-explorer/`
 
 ### Key Decisions
 

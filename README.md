@@ -13,6 +13,11 @@ The interface is designed for two jobs:
 1. a live classroom walkthrough during the presentation
 2. a post-class takeaway resource classmates can explore on their own
 
+## Live URLs
+
+- Repo: `https://github.com/matheusmaldaner/vit-mvit-memvit-explorer`
+- GitHub Pages: `http://matheus.wiki/vit-mvit-memvit-explorer/`
+
 ## Current Status
 
 Implemented:
