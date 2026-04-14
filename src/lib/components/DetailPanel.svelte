@@ -14,7 +14,7 @@
 >
   <div class="detail-head">
     <div>
-      <div class="eyebrow">Interaction Map</div>
+      <div class="eyebrow">Interaction Map (Schematic)</div>
       <h3>{stage.title}</h3>
     </div>
     <div class="detail-badge">{stage.short}</div>
@@ -48,7 +48,7 @@
 
   <div class="detail-foot">
     <div class="foot-card">
-      <span>Token view</span>
+      <span>Toy token view</span>
       <strong>{stage.tokens}</strong>
     </div>
     <div class="foot-card">

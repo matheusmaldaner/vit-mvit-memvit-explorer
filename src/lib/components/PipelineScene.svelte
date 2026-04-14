@@ -90,7 +90,7 @@
 
   <div class="scene-column center">
     <div class="scene-title">
-      <span class="eyebrow">Visible Tokens</span>
+      <span class="eyebrow">Visible Tokens (Toy View)</span>
       <h3>{stage.tokens}</h3>
     </div>
 
