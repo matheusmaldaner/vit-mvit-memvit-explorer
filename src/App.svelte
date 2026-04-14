@@ -4,7 +4,6 @@
   import PipelineScene from './lib/components/PipelineScene.svelte';
   import DetailPanel from './lib/components/DetailPanel.svelte';
   import CompareOverview from './lib/components/CompareOverview.svelte';
-  import ComparisonBand from './lib/components/ComparisonBand.svelte';
   import {
     architectures,
     architectureOrder,
@@ -215,11 +214,4 @@
   {:else}
     <CompareOverview {architectures} {architectureOrder} />
   {/if}
-
-  <ComparisonBand
-    {architectures}
-    {architectureOrder}
-    selected={selectedTab}
-    on:select={handleTabSelect}
-  />
 </div>
