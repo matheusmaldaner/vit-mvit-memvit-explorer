@@ -64,9 +64,9 @@
       <h3>{architecture.inputLabel}</h3>
     </div>
 
-    <div class="filmstrip" class:single={frameCount === 1}>
-      {#each Array(frameCount) as _, frameIndex}
-        <div class={`frame ${frameState(frameIndex)}`} style={`--offset:${frameIndex};`}>
+    {#if frameCount === 1}
+      <div class="filmstrip single">
+        <div class={`frame ${frameState(0)}`}>
           <div class="frame-grid"></div>
           {#if architecture.id === 'vit' && stage.id === 'attention'}
             <div class="frame-rays">
@@ -80,10 +80,23 @@
               {/each}
             </div>
           {/if}
-          <div class="frame-caption">{frameLabel(frameIndex)}</div>
+          <div class="frame-caption">{frameLabel(0)}</div>
         </div>
-      {/each}
-    </div>
+      </div>
+    {:else}
+      <div class={`timeline-strip ${architecture.id === 'memvit' ? 'stream' : 'clip'}`}>
+        <div class="timeline-rail"></div>
+        {#each Array(frameCount) as _, frameIndex}
+          <div class={`timeline-card ${frameState(frameIndex)}`}>
+            <div class="timeline-thumb"></div>
+            <div class="timeline-text">
+              <strong>{frameLabel(frameIndex)}</strong>
+              <span>{architecture.id === 'memvit' ? 'window' : 'clip frame'}</span>
+            </div>
+          </div>
+        {/each}
+      </div>
+    {/if}
 
     <div class="input-note">{stage.note}</div>
   </div>
@@ -308,6 +321,86 @@
 
   .filmstrip.single {
     justify-content: center;
+  }
+
+  .timeline-strip {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    min-height: 182px;
+    align-content: center;
+    padding: 18px 4px;
+  }
+
+  .timeline-rail {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    right: 18px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.22), rgba(var(--accent-rgb), 0.6));
+    transform: translateY(-50%);
+  }
+
+  .timeline-card {
+    position: relative;
+    z-index: 1;
+    min-height: 112px;
+    border-radius: 18px;
+    border: 1px solid rgba(var(--accent-rgb), 0.24);
+    background:
+      linear-gradient(180deg, rgba(var(--accent-rgb), 0.18), rgba(255, 255, 255, 0.92)),
+      rgba(255, 255, 255, 0.88);
+    padding: 10px;
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    box-shadow: 0 10px 18px rgba(23, 34, 44, 0.06);
+  }
+
+  .timeline-card.focus {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 24px rgba(var(--accent-rgb), 0.18);
+  }
+
+  .timeline-card.current {
+    background:
+      linear-gradient(180deg, rgba(var(--accent-rgb), 0.26), rgba(255, 255, 255, 0.94)),
+      rgba(255, 255, 255, 0.9);
+  }
+
+  .timeline-card.past,
+  .timeline-card.memory {
+    opacity: 0.9;
+  }
+
+  .timeline-thumb {
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid rgba(var(--accent-rgb), 0.16);
+    background:
+      linear-gradient(90deg, rgba(var(--accent-rgb), 0.24) 25%, transparent 25%, transparent 50%, rgba(var(--accent-rgb), 0.24) 50%, rgba(var(--accent-rgb), 0.24) 75%, transparent 75%),
+      linear-gradient(rgba(var(--accent-rgb), 0.18) 25%, transparent 25%, transparent 50%, rgba(var(--accent-rgb), 0.18) 50%, rgba(var(--accent-rgb), 0.18) 75%, transparent 75%),
+      linear-gradient(135deg, rgba(var(--accent-rgb), 0.28), rgba(255, 255, 255, 0.82));
+    background-size: 25% 100%, 100% 25%, 100% 100%;
+  }
+
+  .timeline-text {
+    display: grid;
+    gap: 3px;
+  }
+
+  .timeline-text strong {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: #17222c;
+  }
+
+  .timeline-text span {
+    font-size: 0.72rem;
+    color: #52606d;
   }
 
   .frame {
@@ -872,6 +965,10 @@
 
     .filmstrip {
       flex-wrap: wrap;
+    }
+
+    .timeline-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .attend-layout {
