@@ -12,7 +12,7 @@
       <h2>What changes from one architecture generation to the next?</h2>
     </div>
     <p>
-      The comparison mode compresses the whole talk into one screen: flat image tokens,
+      This comparison view compresses the whole artifact into one screen: flat image tokens,
       multiscale video hierarchy, then long-term memory over windows.
     </p>
   </div>

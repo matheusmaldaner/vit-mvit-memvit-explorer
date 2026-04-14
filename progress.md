@@ -43,6 +43,9 @@ Interactive course artifact for the AI Frontier Exploration assignment:
   - `https://github.com/matheusmaldaner/vit-mvit-memvit-explorer`
 - Deployed the artifact to GitHub Pages:
   - `http://matheus.wiki/vit-mvit-memvit-explorer/`
+- Removed presenter-only UI copy from the artifact surface.
+- Reworked per-stage visuals so architecture steps are visibly different instead of mostly static.
+- Verified the revised stage flow by clicking through all ViT, MViT, and MeMViT states with Playwright screenshots.
 
 ### Key Decisions
 
@@ -90,6 +93,7 @@ Interactive course artifact for the AI Frontier Exploration assignment:
 - We need to keep the first build focused on explanation, not numerical fidelity.
 - The current UI is structurally solid, but the motion and stage-to-stage transitions are still lighter than the Polo Club references.
 - The artifact still needs a companion takeaway document beyond the web app itself.
+- The artifact is now substantially clearer, but it can still benefit from stronger motion polish and a more distinctive compare view.
 
 ## Next Actions
 

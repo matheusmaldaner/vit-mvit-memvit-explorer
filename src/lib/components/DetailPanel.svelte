@@ -5,10 +5,7 @@
   export let stageIndex = 0;
 
   $: stage = architecture.stages[stageIndex];
-  $: labels =
-    architecture.id === 'memvit'
-      ? ['q0', 'q1', 'q2', 'q3', 'm0', 'm1']
-      : ['t0', 't1', 't2', 't3'];
+  $: labels = stage.matrixLabels ?? stage.matrix.map((_, index) => `t${index}`);
 </script>
 
 <article
@@ -17,7 +14,7 @@
 >
   <div class="detail-head">
     <div>
-      <div class="eyebrow">Attention Detail</div>
+      <div class="eyebrow">Interaction Map</div>
       <h3>{stage.title}</h3>
     </div>
     <div class="detail-badge">{stage.short}</div>

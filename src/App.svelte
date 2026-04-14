@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
   import ArchitectureTabs from './lib/components/ArchitectureTabs.svelte';
   import StepRail from './lib/components/StepRail.svelte';
   import PipelineScene from './lib/components/PipelineScene.svelte';
@@ -15,8 +14,6 @@
 
   let selectedTab: ArchitectureTab = 'vit';
   let stageIndex = 0;
-  let autoplay = false;
-  let timer: number | undefined;
 
   const tabOptions = [
     {
@@ -52,23 +49,6 @@
     stageIndex = 0;
   }
 
-  $: if (selectedTab === 'compare' && autoplay) {
-    autoplay = false;
-  }
-
-  $: {
-    if (timer) {
-      window.clearInterval(timer);
-      timer = undefined;
-    }
-
-    if (autoplay && architecture) {
-      timer = window.setInterval(() => {
-        stageIndex = (stageIndex + 1) % architecture.stages.length;
-      }, 2400);
-    }
-  }
-
   function handleTabSelect(event: CustomEvent<ArchitectureTab>) {
     selectedTab = event.detail;
     stageIndex = 0;
@@ -84,19 +64,13 @@
     const lastIdx = architecture.stages.length - 1;
     stageIndex = Math.max(0, Math.min(lastIdx, next));
   }
-
-  onDestroy(() => {
-    if (timer) {
-      window.clearInterval(timer);
-    }
-  });
 </script>
 
 <svelte:head>
   <title>ViT, MViT, and MeMViT Explorer</title>
   <meta
     name="description"
-    content="Interactive teaching demo comparing ViT, MViT, and MeMViT with conceptual visuals and dummy attention data."
+    content="Interactive artifact comparing ViT, MViT, and MeMViT with browser-based architecture visuals and dummy data."
   />
 </svelte:head>
 
@@ -104,19 +78,16 @@
   <header class="masthead card">
     <div class="masthead-copy">
       <div class="eyebrow">AI Frontier Artifact</div>
-      <h1>Vision Transformer Families, Explained Like a Live Demo</h1>
+      <h1>Vision Transformer Families</h1>
       <p>
-        A classroom-first explainer for the progression from <strong>ViT</strong> to
-        <strong>MViT</strong> to <strong>MeMViT</strong>. Every visual here uses
-        hand-authored dummy data so the interaction stays fast and legible.
+        Interactive artifact for the progression from <strong>ViT</strong> to
+        <strong>MViT</strong> to <strong>MeMViT</strong>. Each stage uses lightweight
+        browser visuals to show how the representation changes from flat image patches
+        to multiscale video tokens to memory-aware long-range context.
       </p>
     </div>
 
     <div class="masthead-side">
-      <div class="status-row">
-        <span class="pill muted">Conceptual, not trained inference</span>
-        <span class="pill">Projector-friendly layout</span>
-      </div>
       <div class="hero-preview card">
         <div class="hero-preview-head">
           <span class="eyebrow">Architecture Arc</span>
@@ -179,12 +150,12 @@
         <div class="eyebrow">Why It Exists</div>
         <h3>{architecture.problem.title}</h3>
         <p>{architecture.problem.body}</p>
+        <div class="stage-chip">
+          Stage {stageIndex + 1} of {architecture.stages.length}: {architecture.stages[stageIndex].title}
+        </div>
         <div class="control-row">
           <button class="ghost" type="button" on:click={() => advance(-1)} disabled={stageIndex === 0}>
             Previous
-          </button>
-          <button class="play" type="button" on:click={() => (autoplay = !autoplay)}>
-            {autoplay ? 'Pause Story' : 'Play Story'}
           </button>
           <button
             class="ghost"
@@ -203,8 +174,8 @@
         <div class="card rail-card">
           <div class="card-title-row">
             <div>
-              <div class="eyebrow">Stage Story</div>
-              <h3>Walk through the architecture one idea at a time</h3>
+              <div class="eyebrow">Architecture Stages</div>
+              <h3>Click through the representation shift step by step</h3>
             </div>
             <div class="legend-inline">
               {#each architecture.legend as item}
@@ -228,7 +199,7 @@
 
       <div class="side-stack">
         <article class="card teaching-card">
-          <div class="eyebrow">Teaching Script</div>
+          <div class="eyebrow">Key Ideas</div>
           <h3>{architecture.callout.title}</h3>
           <p>{architecture.callout.body}</p>
           <ul class="script-points">
