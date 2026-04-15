@@ -153,7 +153,13 @@
           Stage {stageIndex + 1} of {architecture.stages.length}: {architecture.stages[stageIndex].title}
         </div>
         <div class="control-row">
-          <button class="ghost" type="button" on:click={() => advance(-1)} disabled={stageIndex === 0}>
+          <button 
+            class="ghost" 
+            type="button" 
+            on:click={() => advance(-1)} 
+            disabled={stageIndex === 0}
+            aria-label="Previous stage"
+          >
             Previous
           </button>
           <button
@@ -161,6 +167,7 @@
             type="button"
             on:click={() => advance(1)}
             disabled={stageIndex === architecture.stages.length - 1}
+            aria-label="Next stage"
           >
             Next
           </button>

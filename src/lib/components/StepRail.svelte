@@ -9,10 +9,12 @@
   const dispatch = createEventDispatcher<{ select: number }>();
 </script>
 
-<div class="rail">
+<div class="rail" role="list">
   {#each stages as stage, index}
     <button
       type="button"
+      role="listitem"
+      aria-current={index === activeIndex ? 'step' : undefined}
       class:active={index === activeIndex}
       style={`--accent:${accent};`}
       on:click={() => dispatch('select', index)}
@@ -42,49 +44,69 @@
     border-radius: 20px;
     padding: 14px;
     text-align: left;
-    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    transition: 
+      transform 0.2s var(--ease-out, ease-out), 
+      background 0.2s var(--ease-standard, ease), 
+      border-color 0.2s var(--ease-standard, ease);
+    min-width: 0;
   }
 
   button:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.68);
+    border-color: rgba(23, 34, 44, 0.16);
   }
 
   button.active {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, white), rgba(255, 255, 255, 0.86));
-    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 12%, white), rgba(255, 255, 255, 0.9));
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 8%, transparent);
+    transform: none;
   }
 
   .rail-index {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 999px;
     background: rgba(23, 34, 44, 0.08);
     color: #17222c;
     display: grid;
     place-items: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.82rem;
+    font-family: var(--mono, 'IBM Plex Mono', monospace);
+    font-size: 0.85rem;
+    font-weight: 500;
     flex: 0 0 auto;
+    transition: transform 0.2s var(--ease-out, ease-out);
   }
 
   button.active .rail-index {
     background: var(--accent);
     color: #fff7ef;
+    transform: scale(1.1);
   }
 
   .rail-copy {
     display: grid;
-    gap: 4px;
+    gap: 2px;
+    min-width: 0;
   }
 
   strong {
-    font-size: 0.96rem;
+    font-size: 0.98rem;
     letter-spacing: -0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   small {
     color: #52606d;
     font-size: 0.78rem;
+    line-height: 1.2;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   @media (max-width: 1180px) {
@@ -96,6 +118,10 @@
   @media (max-width: 620px) {
     .rail {
       grid-template-columns: 1fr;
+    }
+    
+    button {
+      padding: 12px;
     }
   }
 </style>
